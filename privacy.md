@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>Privacy Policy – MyApp</title></head>
 <body>
 <h1>Privacy Policy</h1>
 <p><strong>Last updated: 13 July 2025</strong></p>
