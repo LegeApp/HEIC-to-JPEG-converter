@@ -1,0 +1,56 @@
+[package]
+name = "heic2jpeg"
+version = "0.1.0"
+edition = "2021"
+description = "HEIC to JPEG converter"
+license = "MIT"
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+keywords = ["jpeg", "heic", "image", "conversion"]
+categories = ["multimedia::encoding"]
+
+[[bin]]
+name = "benchmark"
+path = "benches/benchmark.rs"
+
+[examples]
+convert_heic = { name = "convert_heic", path = "examples/convert_heic.rs" }
+
+[lib]
+path = "src/lib.rs"
+name = "heic_to_jpeg_rust"
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = []
+android = ["jni"]
+
+[dependencies]
+libheif-rs = "0.22.0"
+toojpeg = { path = "./TooJpeg-rust" } # Local TooJpeg-rust port
+lazy_static = "1.4.0"
+palette = "0.7.6"
+fast_image_resize = "4.2.3"
+anyhow = "1.0.89"
+rayon = "1.10.0"  # For parallel processing
+bytemuck = { version = "1.15.0", features = ["derive"] }
+jni = "0.21.1"
+
+[target.'cfg(target_os = "android")'.dependencies]
+jni = { version = "0.21.1", optional = true }
+
+[target.'cfg(not(target_os = "android"))'.dependencies]
+clap = { version = "4.5.16", features = ["derive"], optional = true }
+
+[dev-dependencies]
+criterion = { version = "0.5.1", features = ["html_reports"] }
+
+[[bench]]
+name = "benchmark"
+harness = false
+
+[profile.release]
+codegen-units = 1
+lto = "fat"
+opt-level = 3
+panic = "abort"
